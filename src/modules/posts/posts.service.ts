@@ -28,7 +28,9 @@ export class PostsService extends BaseService<Post> {
    * @returns {Promise<Post>}
    */
   async create(data: CreatePostDTO): Promise<Post> {
-    return this.save(data);
+    return this.save(data).catch(() => {
+      throw new InternalServerErrorException(this.responses.create.error);
+    });
   }
 
   /**
